@@ -19,7 +19,7 @@ public class sustainPlusPlus {
 		* A representation of ugly?
 		*/
 		world.getObject().sortByAttribute("beauty");
-		if(world.getObject().getFirst().getArtTags().indexOf("abstract") != -1) {
+		if (world.getObject().getFirst().getArtTags().indexOf("abstract") != -1) {
 			me.addPhysicalAttribute("ugly");
 			you.addPhysicalAttribute("ugly");
 		}
@@ -31,7 +31,7 @@ public class sustainPlusPlus {
 		* JUST LIKE YOUR FANTASY
 		* There is no crime in ideality
 		*/
-		if(you.getFetishes().searchByType("name calling", "mommy") != -1) {
+		if (you.getFetishes().searchByType("name calling", "mommy") != -1) {
 			you.addToMemory(me);
 			you.setNicknameFor(you.getMemory(me), "mommy");
 		}
@@ -55,7 +55,7 @@ public class sustainPlusPlus {
 		* This could end right here if you don't let it out
 		* Let it out
 		*/
-		if(you.getThoughts().size() != 0) {
+		if (you.getThoughts().size() != 0) {
 			try {
 				you.sayTo(you.getThoughts(), me);
 				you.clearThoughts();
