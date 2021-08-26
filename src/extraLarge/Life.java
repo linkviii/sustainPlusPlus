@@ -4,16 +4,44 @@ import java.math.BigDecimal;
 import java.util.*;
 
 public class Life {
-    public void addPhysicalAttribute(String atter) {
+
+    private static int globalLifeCount = 0;
+
+    public final UUID id;
+    public final String label;
+
+    public Life() {
+        id = UUID.randomUUID();
+
+        /* Hack to preserve sustainPlusPlus */
+        if (globalLifeCount == 0) {
+            label = "Me";
+        } else if (globalLifeCount == 1) {
+            label = "You";
+        } else {
+            label = "<NO_NAME>";
+        }
+        globalLifeCount++;
+
     }
 
-    class LifeProperty {
+    @Override
+    public String toString() {
+        return label + " [" + id.toString() + "]";
+    }
+
+    /* -------------------------- */
+
+    public void addPhysicalAttribute(String attr) {
+    }
+
+    static class LifeProperty {
         public int searchByType(String propertyName, String propertyValue) {
             return -1;
         }
     }
 
-    public LifeProperty getFetishes() {
+    static public LifeProperty getFetishes() {
 
         return null;
     }
@@ -21,7 +49,7 @@ public class Life {
     public void addToMemory(Life other) {
     }
 
-    class LifeMemory {
+    static class LifeMemory {
         public double getLove() {
             return 0;
         }
@@ -72,7 +100,7 @@ public class Life {
     public void announce(String msg) {
     }
 
-    class Thoughts extends ArrayList<Object> {
+    static class Thoughts extends ArrayList<Object> {
 
     }
 
