@@ -81,10 +81,19 @@ public class World {
         /* TODO: Should the receiver acknowledge? */
     }
 
+    private List<Rule> ruleList = new ArrayList<>();
+
     public void addRule(Rule r) {
+        ruleList.add(r);
+        /*  */
+        String active = r.isActive() ? "active " : "";
+        System.out.println("WORLD:\tNew rule " + active + "in place!");
+        System.out.println("\t| " + r.law);
     }
 
     public void sendMessage(String msg, Life life) {
+        System.out.println("WORLD:\tTO " + life);
+        System.out.println("\t| " + msg);
 
     }
 

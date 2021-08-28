@@ -84,7 +84,7 @@ public class sustainPlusPlus {
         if (you.getMemories(me).getLove() < 0.5) {
             world.getRelationship(me, you).setSustain(0);
         } else {
-            you.transferThoughs(me);
+            you.transferThoughts(me);
             you.transferAttributes(me);
     
             // sustain++;

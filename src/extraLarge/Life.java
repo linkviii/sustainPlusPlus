@@ -36,20 +36,52 @@ public class Life {
     }
 
     static class LifeProperty {
+
+        private HashMap<String, List<String>> propertyMap = new HashMap<>();
+
+        public LifeProperty() {
+        }
+
+        public LifeProperty(HashMap<String, List<String>> val) {
+            propertyMap = val;
+        }
+
         public int searchByType(String propertyName, String propertyValue) {
-            return -1;
+            List<String> list = propertyMap.get(propertyName);
+            if (null == list) {
+                return -1;
+            } else {
+                return list.indexOf(propertyValue);
+            }
+
         }
     }
 
-    static public LifeProperty getFetishes() {
+    private LifeProperty fetishes;
 
-        return null;
+    public LifeProperty getFetishes() {
+
+        /* Lazy initilize for mili */
+        if (null == fetishes) {
+            HashMap<String, List<String>> fetishesMap = new HashMap<>();
+            fetishesMap.put("name calling", Arrays.asList("smarty pants", "mommy"));
+            fetishes = new LifeProperty(fetishesMap);
+
+        }
+
+        return fetishes;
     }
 
     public void addToMemory(Life other) {
     }
 
     static class LifeMemory {
+        private UUID storedID;
+
+        public LifeMemory(Life life) {
+            storedID = life.id;
+        }
+
         public double getLove() {
             return 0;
         }
@@ -90,40 +122,77 @@ public class Life {
     }
 
     public String codeMessage(String txt, String key) {
-        return null;
+        StringBuilder s = new StringBuilder();
+        for (int c = 0; c < txt.length(); ++c) {
+            if (c % key.length() == 0) {
+                s.append(key);
+            }
+            s.append(txt.charAt(c));
+        }
+        return s.toString();
     }
 
     public String decodeMessage(String txt, String key) throws InsufficientIntelligenceQuotientException {
-        return null;
+        if (txt.length() != key.length()) {
+            throw new InsufficientIntelligenceQuotientException();
+        }
+
+        StringBuilder s = new StringBuilder();
+        for (int c = 0; c < txt.length(); ++c) {
+            s.append(txt.charAt(c) - key.charAt(c));
+        }
+
+        return s.toString();
+
     }
 
     public void announce(String msg) {
+        System.out.println(toString() + ":\tTo everyone:");
+        System.out.println("\t| " + msg);
     }
 
-    static class Thoughts extends ArrayList<Object> {
+    static class Thoughts extends ArrayList<String> {
 
     }
+
+    private Thoughts thoughts;
 
     public Thoughts getThoughts() {
-        return null;
+        /* Lazy init thoughts */
+        if (thoughts == null) {
+            thoughts = new Thoughts();
+            thoughts.add("Life is hard sometimes.");
+            thoughts.add("You are important to me.");
+        }
+        return thoughts;
     }
 
-    public void sayTo(Thoughts thoughts, Life reciever) throws TooMuchOfAPussyException {
+    public void sayTo(Thoughts thoughts, Life receiver) throws TooMuchOfAPussyException {
+
+        System.out.println(this + ":\tCommunicating thoughts to " + receiver);
+
+        if (thoughts.size() > 2) {
+            throw new TooMuchOfAPussyException();
+        }
+
+        for (String t : thoughts) {
+            System.out.println("\t| " + t);
+        }
 
     }
 
     // Saying words is easier than saying thoughts
-    public void sayTo(String words, Life reciever) {
+    public void sayTo(String words, Life receiver) {
     }
 
     public void clearThoughts() {
-
+        thoughts.clear();
     }
 
-    void transferThoughs(Life other) {
+    public void transferThoughts(Life other) {
     }
 
-    void transferAttributes(Life other) {
+    public void transferAttributes(Life other) {
     }
 
     public void fight(Life other) {
