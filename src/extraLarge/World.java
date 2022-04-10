@@ -2,8 +2,20 @@ package extraLarge;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.IntStream;
 
 public class World {
+
+    /* package */ static int initialPopulationSize = 200;
+    List<Life> fishInTheSea = new ArrayList<>();
+
+    public World() {
+        // tbh a plain old for loop would be better, but I wanted to try this
+        IntStream.range(0, initialPopulationSize).forEach(_i -> {
+            fishInTheSea.add(new Life());
+        });
+        Collections.sort(fishInTheSea, (a, b) -> a.label.compareTo(b.label));
+    }
 
     static class AwardRecord {
         public AwardRecord(String award, Life recipient) {
@@ -98,7 +110,19 @@ public class World {
     }
 
     static class WorldRelationship {
+        Set<Life> participants = new HashSet<>();
+
+        public WorldRelationship(Life a, Life b) {
+            participants.add(a);
+            participants.add(b);
+        }
+
         public void end() {
+            System.out.println("WORLD:\tThe the relationship among the following is no more:");
+            for (var l : participants) {
+                System.out.println("\t* " + l);
+
+            }
         }
 
         private int sustain = 0;
@@ -119,29 +143,83 @@ public class World {
         }
     }
 
+    private Map<Set<Life>, WorldRelationship> relationships = new HashMap<>();
+
     public WorldRelationship getRelationship(Life a, Life b) {
-        return null;
+        var pair = new HashSet<Life>(Arrays.asList(a, b));
+        var ship = relationships.get(pair);
+        if (null == ship) {
+            ship = new WorldRelationship(a, b);
+            relationships.put(pair, ship);
+        }
+        return ship;
     }
 
+    /**
+     * Unclear what this is supposed to mean.
+     * 
+     * Example: {@code if (me.equiv(simulatedMe) world.execute(me);}
+     * Could be read as `me` is no longer necessary and so `me` should be removed.
+     * Perhaps removed and replaced with `simulatedMe`, though there's not really
+     * context for that.
+     * 
+     * Example: {@code foreach (fight)
+     * if (!fight.isWinning(me)) {world.execute(me); world.execute(you);}
+     * }
+     * I suppose this also suggests terminating the life,
+     * but it could mean running and update function.
+     * Iteration continues/there is no `break` after execution.
+     * Is it expected `execute(it)` can be called multiple times on `it`?
+     * There are calls on `it` after it gets executed.
+     * It's possible the code is written to just assume future calls on and executed
+     * thing
+     * will just throw and terminate.
+     * 
+     * There are two calls so presumably its not expected that execute is
+     * noreturn/always throws.
+     * 
+     * For now, we'll just say that it happens and then do nothing.
+     * 
+     * @param life
+     */
     public void execute(Life life) {
+        System.out.println("WORLD:\t" + life + " has been executed.");
     }
+
+    /*
+     * River:
+     * All we know is that it exists with a size.
+     * ♪ Like what we did to the rivers we killed off in our near future ♫
+     */
 
     static class WorldRiver {
+        int size = 2;
+
         public int size() {
-            return 0;
+            return size;
         }
     }
 
+    WorldRiver river = new WorldRiver();
+
     public WorldRiver getRiver() {
-        return null;
+        return river;
     }
 
     public void mute(Life life, String[] tags) {
+        System.out.println("WORLD:\t" + life + " will no longer respond to the following:");
+        for (var s: tags){
+            System.out.println("\t* "+ s);
+        }
 
     }
 
     public List<Life> getLifeTopOnePercent() {
-        return null;
+        var winners = new ArrayList<Life>();
+        int count =(int) Math.floor(fishInTheSea.size() * 0.01);
+        // Assume fishInTheSea is sorted and that the top is up front
+        winners.addAll(fishInTheSea.subList(0, count));
+        return winners;
     }
 
     public void addPollution(String kind, String reason, Life causer) {
