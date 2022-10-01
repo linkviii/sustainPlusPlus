@@ -208,22 +208,25 @@ public class World {
 
     public void mute(Life life, String[] tags) {
         System.out.println("WORLD:\t" + life + " will no longer respond to the following:");
-        for (var s: tags){
-            System.out.println("\t* "+ s);
+        for (var s : tags) {
+            System.out.println("\t* " + s);
         }
 
     }
 
     public List<Life> getLifeTopOnePercent() {
         var winners = new ArrayList<Life>();
-        int count =(int) Math.floor(fishInTheSea.size() * 0.01);
+        int count = (int) Math.floor(fishInTheSea.size() * 0.01);
         // Assume fishInTheSea is sorted and that the top is up front
         winners.addAll(fishInTheSea.subList(0, count));
         return winners;
     }
 
     public void addPollution(String kind, String reason, Life causer) {
-
+        // No one keeps account of pollution.
+        // A finger gets pointed then the rest of the world pretends the problem doesn't
+        // exist.
+        System.out.println("WORLD:\t" + causer + " has created " + kind + " pollution by " + reason);
     }
 
     public Ghost[] search(Life life, String property) {

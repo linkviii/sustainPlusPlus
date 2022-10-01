@@ -355,15 +355,23 @@ public class Life {
     }
 
     public void love(Life life) {
+        System.out.println(this + ":");
+        System.out.println("\t♥ " + life);
     }
 
     public void praise(Life life, String msg) {
+        System.out.println(this + ":\tTo " + life);
+        System.out.println("\t⌈" + msg + "⌉");
+
     }
 
     public void gift(Life life, String item) {
+        System.out.println(this + ":\tTo " + life);
+        System.out.println("\t→ " + item);
     }
 
     public void consumeLast() {
+        // TODO
     }
 
     public void addFamily(Life life) {
